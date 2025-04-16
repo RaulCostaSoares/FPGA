@@ -3,7 +3,8 @@ module ctrl(
   input logic reset,
   input logic[3:0] dig,
   input logic[3:0] pos,
-
+  
+ //cada um desse eh um display
   output logic[8] a,
   output logic[8] b,
   output logic[8] c,
@@ -11,6 +12,7 @@ module ctrl(
   output logic[8] e,
   output logic[8] f,
   output logic[8] g,
+  output logic[8] dp,
 );
 
   logic[8][3:0] data = 0;

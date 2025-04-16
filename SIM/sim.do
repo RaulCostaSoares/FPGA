@@ -4,8 +4,10 @@ vmap work work
 
 vlog -work work ../SVs/display.sv
 vlog -work work ../SVs/ctrl.sv
-vlog -work work tb_display.sv
-vsim -voptargs=+acc work.tb_ctrl
+vlog -work work ../SVs/calculadora.sv
+vlog -work work ../SVs/calculadora_top.sv
+vlog -work work tb_final.sv
+vsim -voptargs=+acc work.tb_final
 
 quietly set StdArithNoWarnings 1
 quietly set StdVitalGlitchNoWarnings 1
