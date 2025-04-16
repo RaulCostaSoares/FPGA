@@ -1,0 +1,125 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+!s11f vlog 2021.3 2021.07, Jul 13 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 d/home/24104884/Desktop/Facul/SD/T1/sim/calc
+T_opt
+Z2 !s110 1744804488
+V`HZ@H?NSzT4`2n@S>:WAB2
+04 7 4 work tb_calc fast 0
+=1-000ae431a4f1-67ff9a88-c3b96-261b
+!s124 OEM100
+o-quiet -auto_acc_if_foreign -work work +acc
+Z3 tCvgOpt 0
+n@_opt
+OL;O;2021.3;73
+vcaclc
+Z4 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+R2
+!i10b 1
+!s100 95]IQknz_Xd1[7hzV]NUC0
+Ii5cJA1?LAdgCEN9F06aKJ2
+S1
+R1
+w1744804182
+8../../rtl/calc.sv
+F../../rtl/calc.sv
+!i122 2
+L0 1 59
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2021.3;73
+r1
+!s85 0
+31
+Z7 !s108 1744804488.000000
+!s107 ../../rtl/calc.sv|
+!s90 -reportprogress|300|-work|work|../../rtl/calc.sv|
+!i113 0
+Z8 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R3
+vctrl
+R4
+R2
+!i10b 1
+!s100 D]bRYLm_XiL_CPdiJd;fO2
+ISXGZiQA_U4W9WX<GfUQF23
+S1
+R1
+w1744374326
+8../../rtl/ctrl.sv
+F../../rtl/ctrl.sv
+!i122 1
+L0 1 47
+R5
+R6
+r1
+!s85 0
+31
+R7
+!s107 ../../rtl/ctrl.sv|
+!s90 -reportprogress|300|-work|work|../../rtl/ctrl.sv|
+!i113 0
+R8
+R3
+vdisplay
+R4
+R2
+!i10b 1
+!s100 mm@Nzh1N=VJo>P6mHdb@72
+IQ?SX=<@D7hVYPzzZTRo4b0
+S1
+R1
+w1743183816
+8../../rtl/display.sv
+F../../rtl/display.sv
+!i122 0
+L0 1 41
+R5
+R6
+r1
+!s85 0
+31
+!s108 1744804487.000000
+!s107 ../../rtl/display.sv|
+!s90 -reportprogress|300|-work|work|../../rtl/display.sv|
+!i113 0
+R8
+R3
+vtb_calc
+R4
+R2
+!i10b 1
+!s100 eE3iF^HNDOJK7mAnnTZIH3
+Ic^dG8_;VhTH<CN:Y]`AOT1
+S1
+R1
+w1744804483
+8tb_calc.sv
+Ftb_calc.sv
+!i122 3
+L0 3 47
+R5
+R6
+r1
+!s85 0
+31
+R7
+!s107 tb_calc.sv|
+!s90 -reportprogress|300|-work|work|tb_calc.sv|
+!i113 0
+R8
+R3
