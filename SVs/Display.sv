@@ -1,4 +1,4 @@
-module display(
+module Display(
   input logic[3:0] data,
   output logic a,
   output logic b,
@@ -7,9 +7,10 @@ module display(
   output logic e,
   output logic f,
   output logic g,
+  output logic dp,
 );
 
-  logic[7:0][10] ff = {
+  logic[7:0][0:9] ff = {
     "1111110_0", // 0
     "1100000_0", // 1
     "1101101_0", // 2
@@ -29,6 +30,6 @@ module display(
   assign e = ff[4][data];
   assign f = ff[5][data];
   assign g = ff[6][data];
-  
+  assign dp = ff[7][data];
 
 endmodule

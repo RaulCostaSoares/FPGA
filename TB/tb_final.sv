@@ -1,22 +1,23 @@
 `timescale 1ns/100ps
+//tem que terminar
+module tb_final;
 
-module tb_display;
-
-  logic[3:0] data;
+  logic[3:0] cmd;
   
-  logic a;
-  logic b;
-  logic c;
-  logic d;
-  logic e;
-  logic f;
-  logic g;
+  logic d0;
+  logic d1;
+  logic d2;
+  logic d3;
+  logic d4;
+  logic d5;
+  logic d6;
+  logic d7;
 
-  display display1(
-    .a(a), .b(b), .c(c), .d(d),
-    .e(e), .f(f), .g(g),
-    .data(data)
+  calculadora_top topo(
+    .d0(d0), //aquilo tudo e mais o reset e o clock
+    .cmd(cmd)
   );
+//fazer logica do clock 
 
   initial begin
     for (int i = 0; i < 10; i++) begin
