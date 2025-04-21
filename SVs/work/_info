@@ -1,0 +1,113 @@
+m255
+K4
+z2
+!s11f vlog 2024.1 2024.04, Apr 19 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Faculdade/Sistemas Digitais/FPGA-VictorT/SVs
+vCalculadora
+2Calculadora.sv
+Z1 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z2 !s110 1745273346
+!i10b 1
+!s100 oOJ?bAc1_>@3Q3?WHjKJi3
+IE6=gznSld:cP]llT>TN=V3
+S1
+R0
+w1745269957
+8Calculadora.sv
+FCalculadora.sv
+!i122 2
+L0 8 112
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 OL;L;2024.1;79
+r1
+!s85 0
+31
+Z5 !s108 1745273346.000000
+!s107 Calculadora.sv|
+!s90 -reportprogress|300|-work|work|-sv|Calculadora.sv|
+!i113 0
+Z6 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z7 tCvgOpt 0
+n@calculadora
+vcalculadora_top
+2Calculadora_Top.sv
+R1
+R2
+!i10b 1
+!s100 Zm3ka0`1:UP?:19Cmb^CL3
+IImjz6^zd<kgm6gdg[61oo1
+S1
+R0
+w1745271350
+8Calculadora_Top.sv
+FCalculadora_Top.sv
+!i122 3
+L0 7 44
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 Calculadora_Top.sv|
+!s90 -reportprogress|300|-work|work|-sv|Calculadora_Top.sv|
+!i113 0
+R6
+R7
+vdisplay
+2Display.sv
+R1
+R2
+!i10b 1
+!s100 EnLaef0@jl?QoAck`J`U?0
+IE>N?gB<khn@DQjI60>PkU0
+S1
+R0
+w1745269615
+8Display.sv
+FDisplay.sv
+!i122 0
+L0 1 38
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 Display.sv|
+!s90 -reportprogress|300|-work|work|-sv|Display.sv|
+!i113 0
+R6
+R7
+vDisplay_Ctrl
+2Display_Ctrl.sv
+R1
+R2
+!i10b 1
+!s100 nN_VjigNDdUF1]^W]?56U0
+IRUn9AZ^83zCbfa^@>Rab;1
+S1
+R0
+w1745271339
+8Display_Ctrl.sv
+FDisplay_Ctrl.sv
+!i122 1
+L0 1 62
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 Display_Ctrl.sv|
+!s90 -reportprogress|300|-work|work|-sv|Display_Ctrl.sv|
+!i113 0
+R6
+R7
+n@display_@ctrl

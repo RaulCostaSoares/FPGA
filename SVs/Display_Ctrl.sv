@@ -1,9 +1,9 @@
-module ctrl(
+module Display_Ctrl(
   input logic clock,       // Clock do sistema
   input logic reset,       // Reset geral
   input logic [3:0] dig,   // Número a ser exibido (0 a 9)
   input logic [3:0] pos,   // Qual display deve mostrar o número
-
+  
 
   //sinais de controle dos segmentos, acendem os segmentos de CADA display, 
   //cada display é representado por 1 bit do vetor

@@ -1,0 +1,70 @@
+// ==============================
+// Testbench: Calculadora_tb
+// Objetivo: Simular e verificar o funcionamento da calculadora
+// Exibe resultados formatados no terminal
+// ==============================
+
+`timescale 1ns / 1ps
+
+module Calculadora_tb;
+
+  // Sinais de teste
+  reg clock;
+  reg reset;
+  reg [3:0] cmd;
+  
+  // Alterar de reg para wire ou logic
+  wire [7:0] d0, d1, d2, d3, d4, d5, d6, d7;  // Usando 'wire'
+
+  // Clock gerado a cada 5ns (100MHz)
+  always #5 clock = ~clock;
+
+  // Instancia o DUT (Device Under Test)
+  calculadora_top dut (
+    .cmd(cmd),
+    .reset(reset),
+    .clock(clock),
+    .d0(d0), .d1(d1), .d2(d2), .d3(d3),
+    .d4(d4), .d5(d5), .d6(d6), .d7(d7)
+  );
+
+  // Procedimento para simular uma operação
+  task executar_operacao(
+    input [3:0] num1,
+    input [3:0] oper,
+    input [3:0] num2,
+    input [7*8:0] op_str  // A string é tratada como um array de bits
+  );
+    begin
+      $display("\n==== Testando operação: %0d %s %0d ====", num1, op_str, num2);
+
+      cmd = num1;  #10;
+      cmd = oper;  #10;
+      cmd = num2;  #10;
+      cmd = 4'd14; // igual
+      #20;
+
+      $display("Display [resultado]: %0h | d2: %b", dut.data, d2);
+    end
+  endtask
+
+  // Sequência de testes
+  initial begin
+    $display("==== Iniciando Testes da Calculadora ====");
+    clock = 0;
+    reset = 1;
+    cmd = 0;
+    #20;
+    reset = 0;
+
+    // Testes: número1, operação, número2, símbolo textual
+    executar_operacao(4'd2, 4'd10, 4'd3, "+");  // 2 + 3
+    executar_operacao(4'd5, 4'd11, 4'd1, "-");  // 5 - 1
+    executar_operacao(4'd3, 4'd12, 4'd4, "*");  // 3 * 4
+
+    $display("\n==== Fim dos Testes ====");
+    #50;
+    $stop;
+  end
+
+endmodule

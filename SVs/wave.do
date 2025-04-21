@@ -1,13 +1,18 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
-add wave -noupdate ../TB/tb_display/data
-add wave -noupdate ../TB/tb_display/a
-add wave -noupdate ../TB/tb_display/b
-add wave -noupdate ../TB/tb_display/c
-add wave -noupdate ../TB/tb_display/d
-add wave -noupdate ../TB/tb_display/e
-add wave -noupdate ../TB/tb_display/f
-add wave -noupdate ../TB/tb_display/g
+add wave -noupdate Calculadora_tb/cmd
+add wave -noupdate Calculadora_tb/reset 
+add wave -noupdate Calculadora_tb/clock
+add wave -noupdate Calculadora_tb/data 
+add wave -noupdate Calculadora_tb/d0
+add wave -noupdate Calculadora_tb/d1
+add wave -noupdate Calculadora_tb/d2
+add wave -noupdate Calculadora_tb/d3
+add wave -noupdate Calculadora_tb/d4
+add wave -noupdate Calculadora_tb/d5
+add wave -noupdate Calculadora_tb/d6
+add wave -noupdate Calculadora_tb/d7
+
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {377768 ns} 0}
 quietly wave cursor active 1
