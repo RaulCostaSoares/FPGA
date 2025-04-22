@@ -28,14 +28,13 @@ module Calculadora_tb;
   );
 
   //ideia do chat aqui
-  task executar_operacao(
+  executar_operacao(
     input [3:0] num1,
     input [3:0] oper,
     input [3:0] num2,
-    input [7*8:0] op_str  // A string é tratada como um array de bits
   );
     begin
-      $display("\n==== Testando operação: %0d %s %0d ====", num1, op_str, num2);
+      $display("\n==== Testando operação: %0d %s %0d ====", num1,  num2);
 
       cmd = num1;  #10;
       cmd = oper;  #10;
