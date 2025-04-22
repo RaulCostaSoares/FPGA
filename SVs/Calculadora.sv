@@ -71,11 +71,18 @@ module Calculadora(
                         else
                             reg2 <= (reg2 * 10) + cmd;
                     end 
-                    else if (cmd == 4'b1110) begin  //  se cmd for "=", realiza as operações
+
+                    //Quando o cmd for "=", realiza as operações
+                    else if (cmd == 4'b1110) begin 
                         case (op)
-                            4'b1010: saida <= reg1 + reg2;  // Soma
-                            4'b1011: saida <= reg1 - reg2;  // Subtração
-                            4'b1100: begin                   // Multiplicação
+                            //Soma
+                            4'b1010: saida <= reg1 + reg2; 
+
+                            // Subtração
+                            4'b1011: saida <= reg1 - reg2;  
+
+                            // Multiplicação
+                            4'b1100: begin                   
                                 if (reg2 == 0) begin
                                     saida <= 0;
                                 end else begin
@@ -93,6 +100,9 @@ module Calculadora(
                             default: estado_atual <= ERRO;
                         endcase
                     end 
+
+
+                    //Se não for número nem "igual", só pode ser um operador.
                     else begin
                         // Se for operador válido
                         op     <= cmd;
@@ -105,7 +115,7 @@ module Calculadora(
                     end
                 end
 
-                // Erro
+                // Erro em caso de overflow
                 ERRO: begin
                     if (cmd == 4'b1111) begin
                         estado_atual <= PRONTA;
