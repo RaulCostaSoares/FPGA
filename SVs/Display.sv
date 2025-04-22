@@ -23,6 +23,8 @@ module display(
     8'b1110000_0, // 7
     8'b1111111_0, // 8
     8'b1110011_0  // 9
+
+    //Colocar letras também?
   };
 
   // Lógica de controle dos segmentos

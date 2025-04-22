@@ -9,10 +9,10 @@ vlog -work work -sv Calculadora_Top.sv
 
 
 #TA DANDO ERRO
-#vlog -work work -sv Calculadora_tb.sv
+#vlog -work work -sv Calculadora_tb
 
 #ERROOOO
-#vsim work.Calculadora_tb
+vsim work.Calculadora_tb
 
 
 quietly set StdArithNoWarnings 1

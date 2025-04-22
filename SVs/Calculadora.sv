@@ -6,12 +6,12 @@
 // ==============================
 
 module Calculadora(
-    input  logic       clock,     // clock principal
-    input  logic       reset,     // reset geral
-    input  logic [3:0] cmd,       // comando vindo dos botões (0-9, operadores, etc.)
-    output logic [1:0] status,    // estado atual da calculadora
-    output logic [3:0] pos,       // posição atual do display (0 a 3)
-    output logic [3:0] data       // dado a ser exibido no display (dígito)
+    input  logic       clock,     
+    input  logic       reset,     
+    input  logic [3:0] cmd,       // comando
+    output logic [1:0] status,    // estado da calculadora
+    output logic [3:0] pos,       // posição do display
+    output logic [3:0] data       // digito do display
 );
 
     // =====================
@@ -25,19 +25,19 @@ module Calculadora(
 
     estado_t estado;
 
-    // =====================
+    // ======================
     // Registradores internos
-    // =====================
-    logic [3:0] reg1;  // primeiro número
-    logic [3:0] reg2;  // segundo número
-    logic [3:0] op;    // operação: 10 = +, 11 = -, 12 = *
+    // ======================
+    logic [3:0] reg1;  // primeiro num
+    logic [3:0] reg2;  // segundo num
+    logic [3:0] op;    // operação
 
     // =====================
     // Lógica sequencial principal
     // =====================
     always_ff @(posedge clock or posedge reset) begin
         if (reset) begin
-            // Reinicia tudo
+            //reinicia tudo
             estado <= PRONTA;
             reg1 <= 0;
             reg2 <= 0;
@@ -52,7 +52,7 @@ module Calculadora(
                 PRONTA: begin
                     status <= PRONTA;
 
-                    // Entrada de número (0 a 9)
+                    // entrada de número (0 a 9)
                     if (cmd <= 4'd9) begin
                         if (op == 0) begin
                             reg1 <= cmd;
@@ -64,18 +64,18 @@ module Calculadora(
                         data <= cmd;
                     end
 
-                    // Operadores
+                    // operadores
                     else if (cmd == 4'd10 || cmd == 4'd11 || cmd == 4'd12) begin
                         op <= cmd;
                     end
 
-                    // Igual: realizar operação
+                    // igual -> realiza a operação
                     else if (cmd == 4'd14) begin
                         estado <= OCUPADA;
                         status <= OCUPADA;
                     end
 
-                    // Backspace/Reset parcial
+                    // backspace -> reseta tudo
                     else if (cmd == 4'd15) begin
                         reg1 <= 0;
                         reg2 <= 0;

@@ -8,18 +8,17 @@
 
 module Calculadora_tb;
 
-  // Sinais de teste
-  reg clock;
-  reg reset;
-  reg [3:0] cmd;
+  logic clock;
+  logic reset;
+  logic [3:0] cmd;
   
-  // Alterar de reg para wire ou logic
-  wire [7:0] d0, d1, d2, d3, d4, d5, d6, d7;  // Usando 'wire'
+  
+  logic [7:0] d0, d1, d2, d3, d4, d5, d6, d7; 
 
-  // Clock gerado a cada 5ns (100MHz)
+  // clock de 5ns 
   always #5 clock = ~clock;
 
-  // Instancia o DUT (Device Under Test)
+  // Instancia tudo
   calculadora_top dut (
     .cmd(cmd),
     .reset(reset),
@@ -28,7 +27,7 @@ module Calculadora_tb;
     .d4(d4), .d5(d5), .d6(d6), .d7(d7)
   );
 
-  // Procedimento para simular uma operação
+  //ideia do chat aqui
   task executar_operacao(
     input [3:0] num1,
     input [3:0] oper,

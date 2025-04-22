@@ -5,19 +5,19 @@
 // ==============================
 
 module calculadora_top(
-    input logic [3:0] cmd,          // comando de entrada (teclado)
-    input logic reset, clock,       // sinais de controle
+    input logic [3:0] cmd,          // entrada
+    input logic reset, clock,       
     output logic [7:0] d0, d1, d2, d3, d4, d5, d6, d7 // cada display de 7 segmentos
 );
 
-    // Sinais internos de comunicação
+
     logic [3:0] data, pos;      // dados e posição para o display
     logic [1:0] status;         // estado da calculadora
 
-    // Sinais para os segmentos de cada display
+    //sinais para os segmetos de cada display
     logic [7:0] a, b, c, d, e, f, g, dp;
 
-    // Instancia a lógica da calculadora
+    //lógica da calculadora
     Calculadora calculo (
         .clock(clock),
         .reset(reset),
@@ -27,7 +27,7 @@ module calculadora_top(
         .status(status)
     );
 
-    // Instancia o controlador de display, agora com os sinais de data e pos
+
     Display_Ctrl controlador(
         .clock(clock),
         .reset(reset),
@@ -37,7 +37,7 @@ module calculadora_top(
         .e(e), .f(f), .g(g), .dp(dp)
     );
 
-    // Mapeia os sinais dos segmentos para os displays de saída
+    //mapeia os sinais dos segmentos para os displays de saída
     assign d0 = {dp[0], g[0], f[0], e[0], d[0], c[0], b[0], a[0]};
     assign d1 = {dp[1], g[1], f[1], e[1], d[1], c[1], b[1], a[1]};
     assign d2 = {dp[2], g[2], f[2], e[2], d[2], c[2], b[2], a[2]};
