@@ -1,0 +1,156 @@
+m255
+K4
+z2
+!s12c _opt
+Z0 !s99 nomlopt
+!s11f vlog 2024.3 2024.09, Sep 10 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z1 dD:/Work/FPGA-VictorT/FPGA-VictorT/HDL
+T_opt
+!s110 1745410069
+VWk8]m_WO<ISnEL=NG6[9K0
+04 8 4 work tb_final fast 0
+=2-0ccc47e5a150-6808d814-2ff-8700
+R0
+!s12f OEM100
+!s12b OEM100
+!s124 OEM10U12 
+!s135 nogc
+o-quiet -auto_acc_if_foreign -work work +acc
+Z2 tCvgOpt 0
+n@_opt
+OL;O;2024.3;79
+vCalculadora
+2Calculadora.sv
+Z3 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z4 !s110 1745410067
+!i10b 1
+!s100 8f31YSgEZUnXMXhZ[VSfh0
+Ikj?fTl5YjhO_3Hg;F]l`D0
+S1
+R1
+Z5 w1745408916
+8Calculadora.sv
+FCalculadora.sv
+!i122 2
+L0 1 101
+Z6 VDg1SIo80bB@j0V0VzS_@n1
+Z7 OL;L;2024.3;79
+r1
+!s85 0
+31
+Z8 !s108 1745410067.000000
+!s107 Calculadora.sv|
+!s90 -reportprogress|300|-work|work|Calculadora.sv|
+!i113 0
+Z9 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+n@calculadora
+vCalculadora_Top
+2Calculadora_Top.sv
+R3
+Z10 !s110 1745410068
+!i10b 1
+!s100 `RcQ>JJ0Jlj=ffa?]eW]73
+InKN3@5^_kDJklZj=NiIXC0
+S1
+R1
+w1745410063
+8Calculadora_Top.sv
+FCalculadora_Top.sv
+!i122 3
+L0 1 42
+R6
+R7
+r1
+!s85 0
+31
+Z11 !s108 1745410068.000000
+!s107 Calculadora_Top.sv|
+!s90 -reportprogress|300|-work|work|Calculadora_Top.sv|
+!i113 0
+R9
+R2
+n@calculadora_@top
+vDisplay
+2Display.sv
+R3
+R4
+!i10b 1
+!s100 9ZBbNh_lbQ>CNNe5B?X9b2
+IJTK<QK<0nKXX];i>ZIb6R1
+S1
+R1
+w1745409883
+8Display.sv
+FDisplay.sv
+!i122 0
+L0 1 35
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 Display.sv|
+!s90 -reportprogress|300|-work|work|Display.sv|
+!i113 0
+R9
+R2
+n@display
+vDisplay_Ctrl
+2Display_Ctrl.sv
+R3
+R4
+!i10b 1
+!s100 6ZW74NHbA<]]7j:4fkmYi3
+I8<nD@aMoCm8iSJ2Gog7VF1
+S1
+R1
+R5
+8Display_Ctrl.sv
+FDisplay_Ctrl.sv
+!i122 1
+L0 1 44
+R6
+R7
+r1
+!s85 0
+31
+R8
+!s107 Display_Ctrl.sv|
+!s90 -reportprogress|300|-work|work|Display_Ctrl.sv|
+!i113 0
+R9
+R2
+n@display_@ctrl
+vtb_final
+2tb_final.sv
+R3
+R10
+!i10b 1
+!s100 AI6KFnVMiX23`fGG2>0>G1
+Io:=OU3:LoRg=Jf9;zeb?b0
+S1
+R1
+w1745409990
+8tb_final.sv
+Ftb_final.sv
+!i122 4
+L0 3 49
+R6
+R7
+r1
+!s85 0
+31
+R11
+!s107 tb_final.sv|
+!s90 -reportprogress|300|-work|work|tb_final.sv|
+!i113 0
+R9
+R2
