@@ -1,4 +1,4 @@
-module calculadora_top(
+module Calculadora_Top(
     input logic [3:0] cmd,
     input logic reset, clock,
     output logic [7:0] d0, d1, d2, d3, d4, d5, d6, d7

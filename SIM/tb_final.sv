@@ -45,7 +45,8 @@ module tb_final #();
     cmd = 0010; // entrada 1
     #10
     cmd = 1110; // entrada =
-    #10 $finish
+    #10 
+    $stop;
   end 
 
 endmodule: tb_final

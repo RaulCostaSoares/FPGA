@@ -7,7 +7,7 @@ module Display(
   output logic e,
   output logic f,
   output logic g,
-  output logic dp,
+  output logic dp
 );
 
   logic[7:0][0:9] ff = {
