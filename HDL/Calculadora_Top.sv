@@ -4,9 +4,9 @@ module calculadora_top(
     output logic [7:0] d0, d1, d2, d3, d4, d5, d6, d7
 );
 
-    logic [3:0] data, pos;
-    logic [1:0] status;  
-    logic [7:0] a, b, c, d, e, f, g, dp;
+    reg [3:0] data, pos;
+    reg [1:0] status;  
+    reg [7:0] a, b, c, d, e, f, g, dp;
 
     Calculadora calculo (
         .clock(clock),
