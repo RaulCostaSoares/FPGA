@@ -1,4 +1,3 @@
-// PARA TERMINAR --> logica para as posicoes no display
 module Calculadora(
     input logic [3:0] cmd,
     input logic reset,

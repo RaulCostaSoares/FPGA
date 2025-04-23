@@ -2,10 +2,10 @@ if {[file isdirectory work]} {vdel -all -lib work}
 vlib work
 vmap work work
 
-vlog -work work ../SVs/Display.sv
-vlog -work work ../SVs/Display_Ctrl.sv
-vlog -work work ../SVs/Calculadora.sv
-vlog -work work ../SVs/Calculadora_Top.sv
+vlog -work work ../HDL/Display.sv
+vlog -work work ../HDL/Display_Ctrl.sv
+vlog -work work ../HDL/Calculadora.sv
+vlog -work work ../HDL/Calculadora_Top.sv
 
 vlog -work work tb_final.sv
 vsim -voptargs=+acc work.tb_final
