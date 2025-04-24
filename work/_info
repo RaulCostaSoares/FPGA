@@ -11,166 +11,6 @@ R0
 R1
 R0
 R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
-R0
-R1
 !s11f vlog 2024.1 2024.04, Apr 19 2024
 13
 !s112 1.1
@@ -178,12 +18,12 @@ R1
 !i10e 25
 !i10f 100
 cModel Technology
-Z2 dC:/Users/pedro oliveira/Desktop/Pasta/FPGA-VictorT/HDL
+Z2 dD:/Faculdade/Sistemas Digitais/Calculadora_Verilog/FPGA-main
 T_opt
-!s110 1745465862
-VFBXfF6dPKDoQQB?`l5h[[1
+!s110 1745524574
+VOL?kJKWKIRDKUM@T0GX9z3
 04 8 4 work tb_final fast 0
-=1-00e2696bfb0f-6809b206-1cd-8a4
+=1-00e2696bfb0f-680a975d-3d2-2a4c
 R1
 !s12f OEM100
 !s12b OEM100
@@ -195,23 +35,23 @@ OL;O;2024.1;79
 vCalculadora
 2Calculadora.sv
 Z4 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-Z5 !s110 1745465827
+Z5 !s110 1745524548
 !i10b 1
-!s100 IQEW>?MaahG55Y1N@mDJ63
-IRcZ^]<A@:fF^>PJNjoaU03
+!s100 Rodgb:^IRfmjzU9Z4hRQk0
+IoFgc<Z[jAO7_ZaYFbI[7T2
 S1
 R2
-w1745465817
+w1745524543
 8Calculadora.sv
 FCalculadora.sv
 !i122 2
-L0 15 168
+L0 15 183
 Z6 VDg1SIo80bB@j0V0VzS_@n1
 Z7 OL;L;2024.1;79
 r1
 !s85 0
 31
-Z8 !s108 1745465827.000000
+Z8 !s108 1745524548.000000
 !s107 Calculadora.sv|
 !s90 -reportprogress|300|-work|work|Calculadora.sv|
 !i113 0
@@ -221,13 +61,13 @@ n@calculadora
 vCalculadora_Top
 2Calculadora_Top.sv
 R4
-R5
+Z10 !s110 1745524549
 !i10b 1
 !s100 FKJBkQ@Q=>DeCfoGW@Y1V2
 I5=X5PJnT]4]^8CBonScI31
 S1
 R2
-w1745452268
+Z11 w1745466195
 8Calculadora_Top.sv
 FCalculadora_Top.sv
 !i122 3
@@ -237,7 +77,7 @@ R7
 r1
 !s85 0
 31
-R8
+Z12 !s108 1745524549.000000
 !s107 Calculadora_Top.sv|
 !s90 -reportprogress|300|-work|work|Calculadora_Top.sv|
 !i113 0
@@ -253,7 +93,7 @@ R5
 I@nDdQQIncdEiTbg7iKadn1
 S1
 R2
-w1745454787
+R11
 8Display.sv
 FDisplay.sv
 !i122 0
@@ -278,7 +118,7 @@ R5
 I9`kVeN5`ho>_czaQkCgYV2
 S1
 R2
-w1745454550
+R11
 8Display_Ctrl.sv
 FDisplay_Ctrl.sv
 !i122 1
@@ -298,23 +138,23 @@ n@display_@ctrl
 vtb_final
 2tb_final.sv
 R4
-!s110 1745465828
+R10
 !i10b 1
-!s100 ZoPb6o]R5AQDMYcj:fng53
-I__e?LOR<46eb`]HFCDlYC1
+!s100 [iIl<MhE`NcSE^Tjl_Q9V3
+IDaTSoWXNXOX?K<Z;b<OD50
 S1
 R2
-w1745465234
+w1745524043
 8tb_final.sv
 Ftb_final.sv
 !i122 4
-L0 32 67
+L0 32 88
 R6
 R7
 r1
 !s85 0
 31
-R8
+R12
 !s107 tb_final.sv|
 !s90 -reportprogress|300|-work|work|tb_final.sv|
 !i113 0

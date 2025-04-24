@@ -96,8 +96,20 @@ module Calculadora(
 
                         //soma
                      4'b1010: begin
+                        
                         dig <= reg1 + reg2;
                         pos <= pos + 1;
+
+                        // -----  Lógica Teste ---------//
+                        //saida <= reg1 + reg2;
+                        // if(flag_div == 0) begin
+                        // dig <= saida / 10;
+                        // pos <= pos + 1;
+                        // flag_div <= 1; 
+                        // end
+                        // else
+                        // dig <= saida % 10;
+                        
                 end                
                         
                         //sub
@@ -135,6 +147,7 @@ module Calculadora(
 
                         end
                         default: estados <= ERRO;
+
                     endcase
                 end else begin
                     op     <= cmd;
@@ -175,6 +188,8 @@ module Calculadora(
                         pos <= pos + 1;
                 end
             end
+
+
         endcase
     end
 end
