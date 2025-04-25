@@ -34,7 +34,7 @@ module Calculadora(
     // ========================
     reg [31:0] reg1, reg2, saida, contador;
     reg [3:0] op;
-    reg set_op, flag, flag_div;
+    reg set_op, flag, flag_div; // flags para mandar para o display
 
 
     // ====================
@@ -59,7 +59,6 @@ module Calculadora(
         saida    <= 32'b0;
         contador <= 32'd0;
     end else begin
-
         case (estados)
             PRONTA: begin
                 //reg1
@@ -68,61 +67,39 @@ module Calculadora(
                     dig <=  cmd;
                     
                 //não incrementa pós na primeira vez
-                if(flag) 
-                begin
-                   pos <= pos + 1;
-                end
-
-                flag <= 1;
+                    if(flag) begin
+                        pos <= pos + 1;
+                    end
+                    flag <= 1;
                 end 
 
                 //reg2
                 else if (cmd < 10 && set_op) begin 
                     reg2 <= (reg2 * 10) + cmd;
                     dig <=  cmd;
-                    
+                    //não incrementa pós na primeira vez
+                    if(flag) begin
+                        pos <= pos + 1;
+                    end
 
-                //não incrementa pós na primeira vez
-                if(flag) 
-                begin
-                   pos <= pos + 1;
-                end
-
-                flag <= 1;
+                    flag <= 1;
                 end 
 
                 else if (cmd == 4'b1110) begin // teste se digitou igual
+                    estados <= OCUPADA;
                     case (op)
-
                         //soma
-                     4'b1010: begin
-                        
-                        dig <= reg1 + reg2;
-                        pos <= pos + 1;
-
-                        // -----  Lógica Teste ---------//
-                        //saida <= reg1 + reg2;
-                        // if(flag_div == 0) begin
-                        // dig <= saida / 10;
-                        // pos <= pos + 1;
-                        // flag_div <= 1; 
-                        // end
-                        // else
-                        // dig <= saida % 10;
-                        
-                end                
-                        
-                        //sub
+                        4'b1010: begin
+                                saida <= reg1 + reg2;    
+                            end                
+                            //sub
                         4'b1011: begin
-                                 dig <= reg1 - reg2;
-                                 pos <= pos + 1;
-                                 end  
-                        
-                        //mult
+                                saida <= reg1 - reg2;
+                            end  
+                            //mult
                         4'b1100: begin
-                            if (reg1 == 0 | reg2 == 0) begin
+                            if (reg1 == 0 | reg2 == 0) begin // | ou || ou or n sei
                                 dig <= 0;
-                                pos <= pos + 1;
                             end
                             else begin
                                 saida <= 0;
@@ -130,25 +107,21 @@ module Calculadora(
                                 estados <= OCUPADA;
                             end
                         end
-
-
                         //backspace
                         4'b1111: 
                         begin
                             if (set_op) begin
                                 reg2 <= reg2 / 10;
-                                pos <= pos - 1;
                             end
-                            
+                                
                             else begin
                                 reg1 <= reg1 / 10;
-                                pos <= pos - 1;
                             end
-
                         end
-                        default: estados <= ERRO;
-
-                    endcase
+                    
+                        default: estados <= PRONTA; // era ERRO
+                endcase
+                
                 end else begin
                     op     <= cmd;
                     set_op <= 1;
@@ -175,21 +148,30 @@ module Calculadora(
             end
 
             OCUPADA: begin
-                if (contador < reg2) begin
-                    saida    <= saida + reg1;
-                    contador <= contador + 1;
-                end else begin
-                    contador <= 0;
-                    if (saida > 32'd99999999)
-                        estados <= ERRO;
-                    else
-                        estados <= PRONTA;
-                        dig <= saida;
+                if (cmd == 4'b1100) begin 
+                    if (contador < reg2) begin
+                        saida    <= saida + reg1;
+                        contador <= contador + 1;
+                    end else begin
+                        contador <= 0;
+                        if (saida > 32'd99999999)
+                            estados <= ERRO;
+                        else
+                            estados <= PRONTA;
+                            dig <= saida;
+                            pos <= pos + 1;
+                    end
+                end else if (cmd == 4'b1010 || cmd == 4'b1011) begin                    
+                    if(flag_div == 0) begin
+                        dig <= saida / 10;
                         pos <= pos + 1;
+                        flag_div <= 1; 
+                    end else begin
+                        dig <= saida % 10;
+                        estados <= PRONTA;
+                    end
                 end
             end
-
-
         endcase
     end
 end
