@@ -1,16 +1,14 @@
-// ==============================
-// Módulo: Calculadora
-// Função: Calculadora simples com 2 operandos e 1 operador
-// Suporta: Soma, Subtração, Multiplicação (usando soma repetida) e reset
-// ===============================
-
-// =========================
-//  Soma   = 4'b1010;
-//  Subt   = 4'b1011;
-//  Mult   = 4'b1100;
-//  Igual  = 4'b1110;
-//  Backs  = 4'b1111;
-// =========================
+/* 
+    Módulo: Calculadora
+    Função: Calculadora simples com 2 operandos e 1 operador
+    Suporta: Soma, Subtração, Multiplicação (somas repetidas) e reset
+===============================
+    Soma   = 4'b1010;
+    Subt   = 4'b1011;
+    Mult   = 4'b1100;
+    Igual  = 4'b1110;
+    Backs  = 4'b1111;
+*/
 
 module Calculadora(
     input logic [3:0] cmd,  // comando para receber digito ou operador
@@ -22,35 +20,21 @@ module Calculadora(
     output logic [3:0] dig      // dígito do display
 );
 
-
-    // ====================
-    // Estados possíveis
-    // ====================
-    typedef enum logic [1:0] {ERRO, PRONTA, OCUPADA} statetype;
+    typedef enum logic [1:0] {ERRO, PRONTA, OCUPADA} statetype; //FSM
     statetype estados;
 
-    // ========================
-    // Registradores internos
-    // ========================
-    reg [31:0] reg1, reg2, saida, contador;
-    reg [3:0] op;
+    reg [31:0] reg1, reg2, saida, contador; // a, b, resultado e flag para mult
+    reg [3:0] op; // operacao escolhida
     reg set_op, flag, flag_div; // flags para mandar para o display
 
+    assign status = estados[1:0]; // liga estados na saida status
 
-    // ====================
-    // Saídas
-    // ====================
-    assign status   = estados[1:0]; 
-
-    // ======================
-    // Lógica principal
-    // ======================
-    always @(posedge clock ) begin
+   always @(posedge clock) begin
     if (reset) begin
         estados  <= PRONTA;
         op       <= 4'b1010;
         dig      <= 0;
-        pos      <= -1;
+        pos      <= 0;
         set_op   <= 0;
         flag     <= 0;
         flag_div <= 0;
@@ -61,75 +45,55 @@ module Calculadora(
     end else begin
         case (estados)
             PRONTA: begin
-                //reg1
                 if (cmd < 10 && !set_op) begin
                     reg1 <= (reg1 * 10) + cmd;
-                    dig <=  cmd;
-                    
-                //não incrementa pós na primeira vez
-                    if(flag) begin
-                        pos <= pos + 1;
-                    end
+                    dig <= cmd;
+                    pos <= 0;
                     flag <= 1;
                 end 
-
-                //reg2
                 else if (cmd < 10 && set_op) begin 
                     reg2 <= (reg2 * 10) + cmd;
-                    dig <=  cmd;
-                    //não incrementa pós na primeira vez
-                    if(flag) begin
-                        pos <= pos + 1;
-                    end
-
+                    dig <= cmd;
+                    pos <= 0;
                     flag <= 1;
                 end 
-
-                else if (cmd == 4'b1110) begin // teste se digitou igual
+                else if (cmd == 4'b1110) begin
                     estados <= OCUPADA;
                     case (op)
-                        //soma
-                        4'b1010: begin
-                                saida <= reg1 + reg2;    
-                            end                
-                            //sub
-                        4'b1011: begin
-                                saida <= reg1 - reg2;
-                            end  
-                            //mult
-                        4'b1100: begin
-                            if (reg1 == 0 | reg2 == 0) begin // | ou || ou or n sei
+                        4'b1010: begin // soma
+                            saida <= reg1 + reg2;    
+                        end                
+                        4'b1011: begin // sub
+                            saida <= reg1 - reg2;
+                        end  
+                        4'b1100: begin // mult
+                            if (reg1 == 0 || reg2 == 0) begin // se um dos dois forem 0
                                 dig <= 0;
-                            end
-                            else begin
+                            end else begin
                                 saida <= 0;
                                 contador <= 0;
                                 estados <= OCUPADA;
                             end
                         end
-                        //backspace
-                        4'b1111: 
-                        begin
-                            if (set_op) begin
+                        4'b1111: begin // backspace
+                            if (set_op) begin // se tiver op, precisa ser reg2
                                 reg2 <= reg2 / 10;
-                            end
-                                
-                            else begin
+                            end else begin // se nao tiver, sera reg1
                                 reg1 <= reg1 / 10;
                             end
                         end
-                    
-                        default: estados <= PRONTA; // era ERRO
-                endcase
-                
-                end else begin
-                    op     <= cmd;
-                    set_op <= 1;
+                        default: estados <= PRONTA;
+                    endcase
+                end 
+                else begin
+                    op     <= cmd; // se nao for digito, sera op
+                    set_op <= 1; // atualiza flag set_op pois foi selecionado op
+                    dig    <= 0;
+                    pos    <= 0;
                 end
 
                 if ((!set_op && reg1 > 32'd99999999) || (set_op && reg2 > 32'd99999999)) begin
-                    estados <= ERRO;
-                    pos <= 0;
+                    estados <= ERRO; //se ultrapassar limite do display
                 end
             end
 
@@ -148,32 +112,47 @@ module Calculadora(
             end
 
             OCUPADA: begin
-                if (cmd == 4'b1100) begin 
+                if (op == 4'b1100) begin // multiplicacao
                     if (contador < reg2) begin
                         saida    <= saida + reg1;
                         contador <= contador + 1;
                     end else begin
                         contador <= 0;
-                        if (saida > 32'd99999999)
+                        if (saida > 32'd99999999) begin
                             estados <= ERRO;
-                        else
+                        end else begin
                             estados <= PRONTA;
-                            dig <= saida;
-                            pos <= pos + 1;
+                            pos <= 0;
+                            flag_div <= 0;
+                        end
                     end
-                end else if (cmd == 4'b1010 || cmd == 4'b1011) begin                    
-                    if(flag_div == 0) begin
-                        dig <= saida / 10;
-                        pos <= pos + 1;
-                        flag_div <= 1; 
+                end else begin // mostra do display
+                    if (!flag_div) begin
+                        dig <= saida / 10000000; // pos 0
+                        saida <= saida % 10000000; // resto da divisao para o resto dos bits
+                        pos <= 0;
+                        flag_div <= 1;
                     end else begin
-                        dig <= saida % 10;
-                        estados <= PRONTA;
+                        case (pos)
+                            0: dig <= saida / 10000000;          
+                            1: dig <= (saida / 1000000) % 10;    
+                            2: dig <= (saida / 100000) % 10;     
+                            3: dig <= (saida / 10000) % 10;      
+                            4: dig <= (saida / 1000) % 10;       
+                            5: dig <= (saida / 100) % 10;        
+                            6: dig <= (saida / 10) % 10;         
+                            7: dig <= saida % 10;               
+                            default: dig <= 0;
+                        endcase
+                        pos <= pos + 1;
+                        if (pos == 8) begin // chegou no final, imprimiu t0dos os bits
+                            estados <= PRONTA;
+                        end
                     end
                 end
             end
         endcase
     end
 end
-    
+
 endmodule
