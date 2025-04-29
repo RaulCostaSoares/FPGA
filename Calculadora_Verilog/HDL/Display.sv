@@ -13,8 +13,7 @@ module display(
   //tabela de segmentos
   logic [7:0] ff [0:9] = {
     //abcdefg_dp
-    //8'b1111110_0, // 0
-    8'b0000000_0, // 0
+    8'b1111110_0, // 0
     8'b0110000_0, // 1
     8'b1101101_0, // 2
     8'b1111001_0, // 3
@@ -24,18 +23,17 @@ module display(
     8'b1110000_0, // 7
     8'b1111111_0, // 8
     8'b1110011_0  // 9
-
-    //Colocar letras também?
   };
 
-  // Lógica de controle dos segmentos
+  // Logica de controle dos segmentos
   always_comb begin
     // Desliga todos os segmentos por padrão
     {a, b, c, d, e, f, g, dp} = 8'b00000000;
 
     // Liga segmentos com base no valor de data, se for válido (0 a 9)
-    if (data < 10)
+    if (data < 10) begin
       {a, b, c, d, e, f, g, dp} = ff[data];
+    end 
   end
 
 endmodule

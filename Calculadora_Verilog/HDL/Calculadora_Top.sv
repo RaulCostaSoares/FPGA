@@ -4,7 +4,6 @@
 // Conecta: Calculadora + Display_Ctrl + Saída para os 8 displays de 7 segmentos
 // ==============================
 
-
 module Calculadora_Top(
     input logic [3:0] cmd,
     input logic reset, clock,

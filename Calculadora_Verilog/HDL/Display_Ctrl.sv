@@ -4,31 +4,22 @@ module Display_Ctrl(
   input logic [3:0] dig,   // Número a ser exibido (0 a 9)
   input logic [3:0] pos,   // Qual display deve mostrar o número
   
-
-  //sinais de controle dos segmentos, acendem os segmentos de CADA display, 
-  //cada display é representado por 1 bit do vetor
-  output logic[8] a,
-  output logic[8] b,
-  output logic[8] c,
-  output logic[8] d,
-  output logic[8] e,
-  output logic[8] f,
-  output logic[8] g,
-  output logic[8] dp
+  output logic[7:0] a,
+  output logic[7:0] b,
+  output logic[7:0] c,
+  output logic[7:0] d,
+  output logic[7:0] e,
+  output logic[7:0] f,
+  output logic[7:0] g,
+  output logic[7:0] dp
 );
 
 
   //cria um vetor de 8 linhas (chamado data), onde cada posição (linha) tem 4 bits (para armazenar um numero de 0 à 9)
-  logic[8][3:0] data = '{default: 4'd15};
+  logic[7:0][3:0] data = '{default: 4'd15};
 
-
-  //o primeiro display vai receber a primeira posição (de 8) do data, e vai receber como saida as primeiras posições dos outputs
 
   display d0 (.data(data[0]),.a(a[0]), .b(b[0]), .c(c[0]), .d(d[0]), .e(e[0]), .f(f[0]), .g(g[0]), .dp(dp[0]));
-  //input logic[3:0] data recebe data[0]
-  //output logic a, recebe output logic[0] a
-  //output logic b, recebe output logic[0] b
-  //                 ...
 
   display d1 (.data(data[1]),.a(a[1]), .b(b[1]), .c(c[1]), .d(d[1]), .e(e[1]), .f(f[1]), .g(g[1]), .dp(dp[1]));
 
@@ -45,10 +36,10 @@ module Display_Ctrl(
   display d7 (.data(data[7]),.a(a[7]), .b(b[7]), .c(c[7]), .d(d[7]), .e(e[7]), .f(f[7]), .g(g[7]), .dp(dp[7]));
 
 
-   always @(posedge clock or negedge reset) begin
+  always @(posedge clock) begin
     if (reset) begin
-    for (int i = 0; i < 8; i++) begin
-      data[i] <= 4'b0;
+      for (int i = 0; i < 8; i++) begin
+        data[i] <= 4'b0;
     end
   end else begin
     if (pos < 8 && dig < 10) begin
