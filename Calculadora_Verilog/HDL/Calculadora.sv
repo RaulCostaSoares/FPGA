@@ -1,143 +1,176 @@
 module Calculadora(
-    input logic [3:0] cmd,  // comando: dígito ou operador
-    input logic reset,
-    input logic clock, 
+    input  logic [3:0] cmd,  
+    input  logic reset,
+    input  logic clock, 
 
-    output logic [1:0] status, // estado atual
-    output logic [3:0] pos,     // posição do display 
-    output logic [3:0] dig      // dígito para o display
+    output logic [1:0] status, 
+    output logic [3:0] pos,     
+    output logic [3:0] dig     
 );
 
-    typedef enum logic [1:0] {ERRO, PRONTA, OCUPADA} statetype;
-    statetype estados;
+    typedef enum logic [1:0] {ERRO, PRONTA, OCUPADA} estados_sinal;
+    typedef enum logic [2:0] {
+        IN_REG1, IN_OP, IN_REG2, IN_EQUAL, SEND_DIS, ERROR
+    } estados_calculadora;
 
-    reg [31:0] reg1, reg2, saida, contador;
-    reg [3:0] op;
-    reg set_op, flag, flag_div;
-    reg [3:0] pos_atual; // contador de posição de dígito
+    estados_sinal out_states;
+    estados_calculadora states;
 
-    assign status = estados; 
+    assign status = out_states;
 
-    always @(posedge clock) begin
+    reg [31:0] reg1, reg2, resultado;
+    reg [3:0]  operacao;
+
+    reg [31:0] contador_m;
+    reg [31:0] aux_resultado;
+    reg [3:0]  pos_disp;
+
+    always_ff @ (posedge clock) begin
         if (reset) begin
-            estados  <= PRONTA;
-            op       <= 4'b1010;
-            dig      <= 0;
-            pos      <= 0;
-            set_op   <= 0;
-            flag     <= 0;
-            flag_div <= 0;
-            reg1     <= 0;
-            reg2     <= 0;
-            saida    <= 0;
-            contador <= 0;
-            pos_atual <= 0;
+            states <= IN_REG1;
+            out_states <= PRONTA;
+            reg1 <= 0;
+            reg2 <= 0;
+            resultado <= 0;
+            operacao <= 0;
+            contador_m <= 0;
+            aux_resultado <= 0;
+            pos_disp <= 0;
+            $display("Reset: reg1=%d, reg2=%d, resultado=%d, operacao=%d", reg1, reg2, resultado, operacao);
         end else begin
-            case (estados)
-                PRONTA: begin
-                    if (cmd < 10 && !set_op) begin
+            $display("DIG = %0d | POS = %0d", dig, pos);
+            case (states)
+
+                IN_REG1: begin
+                    if (cmd < 10) begin
+                        reg1 <= cmd;
+                        dig <= cmd;
+                        pos <= 0;
+                        states <= IN_OP;
+                        out_states <= OCUPADA;
+                        $display("IN_REG1: reg1=%d", reg1);
+                    end
+                end
+
+                IN_OP: begin
+                    if (cmd > 9 && cmd != 4'b1111) begin
+                        operacao <= cmd;
+                        states <= IN_REG2;
+                        $display("IN_OP: operacao=%d", operacao);
+                    end else if (cmd == 4'b1111) begin
+                        reg1 <= reg1 / 10;
+                        $display("IN_OP (cmd 4'b1111): reg1=%d", reg1);
+                    end else if (cmd < 10) begin
                         reg1 <= (reg1 * 10) + cmd;
                         dig <= cmd;
-                        pos <= pos; // mantém posição atual (ou pode incrementar se quiser)
-                        flag <= 1;
-                    end 
-                    else if (cmd < 10 && set_op) begin 
+                        pos <= 0;
+                        out_states <= OCUPADA;
+                        $display("IN_OP (cmd < 10): reg1=%d", reg1);
+                    end
+                end
+
+                IN_REG2: begin
+                    if (cmd < 10) begin
+                        reg2 <= cmd;
+                        dig <= cmd;
+                        pos <= 0;
+                        states <= IN_EQUAL;
+                        out_states <= OCUPADA;
+                        $display("IN_REG2: reg2=%d", reg2);
+                    end
+                end
+
+                IN_EQUAL: begin
+                    if (cmd == 4'b1111) begin
+                        reg2 <= reg2 / 10;
+                        $display("IN_EQUAL (cmd 4'b1111): reg2=%d", reg2);
+                    end else if (cmd < 10) begin
                         reg2 <= (reg2 * 10) + cmd;
                         dig <= cmd;
-                        pos <= pos; 
-                        flag <= 1;
-                    end 
-                    else if (cmd == 4'b1110) begin
-                        case (op)
-                            4'b1010: begin
-                                saida <= reg1 + reg2;
-                                estados <= OCUPADA;
-                                pos_atual <= 0;
-                            end                
-                            4'b1011: begin
-                                saida <= reg1 - reg2;
-                                estados <= OCUPADA;
-                                pos_atual <= 0;
-                            end  
-                            4'b1100: begin
-                                if (reg1 == 0 || reg2 == 0) begin
-                                    estados <= ERRO;
-                                end else begin
-                                    saida <= 0;
-                                    contador <= 0;
-                                    estados <= OCUPADA;
-                                    pos_atual <= 0;
-                                end
-                            end
-                            default: estados <= PRONTA;
-                        endcase
-                    end 
-                    else if ((!set_op && reg1 > 32'd99999999) || (set_op && reg2 > 32'd99999999)) begin
-                        estados <= ERRO;
                         pos <= 0;
-                    end 
-                    else begin
-                        op <= cmd;
-                        set_op <= 1;
-                    end
-                end
-
-                ERRO: begin
-                    if (cmd == 4'b1111) begin
-                        estados  <= PRONTA;
-                        reg1     <= 0;
-                        reg2     <= 0;
-                        saida    <= 0;
-                        op       <= 0;
-                        set_op   <= 0;
-                        contador <= 0;
-                        dig      <= 0;
-                        pos      <= 0;
-                        pos_atual <= 0;
-                    end
-                end
-
-                OCUPADA: begin
-                    if (op == 4'b1100 && contador < reg2) begin
-                        saida <= saida + reg1;
-                        contador <= contador + 1;
-                    end 
-                    else begin
-                        if (saida > 32'd99999999) begin
-                            estados <= ERRO;
-                        end 
-                        else begin
-                            case (pos_atual)
-                                0: dig <= (saida / 10000000) % 10;
-                                1: dig <= (saida / 1000000) % 10;
-                                2: dig <= (saida / 100000) % 10;
-                                3: dig <= (saida / 10000) % 10;
-                                4: dig <= (saida / 1000) % 10;
-                                5: dig <= (saida / 100) % 10;
-                                6: dig <= (saida / 10) % 10;
-                                7: dig <= saida % 10;
-                                default: dig <= 0;
-                            endcase
-                            
-                            pos <= pos_atual;
-                            pos_atual <= pos_atual + 1;
-
-                            if (pos_atual == 8) begin
-                                estados <= PRONTA;
-                                reg1 <= 0;
-                                reg2 <= 0;
-                                saida <= 0;
-                                op <= 4'b1010;
-                                set_op <= 0;
-                                contador <= 0;
-                                pos_atual <= 0;
+                        out_states <= OCUPADA;
+                        $display("IN_EQUAL (cmd < 10): reg2=%d", reg2);
+                    end else if (cmd == 4'b1110) begin
+                        case (operacao)
+                            4'b1010: begin
+                                resultado <= reg1 + reg2;
+                                $display("IN_EQUAL (Soma): resultado=%d", resultado);
                             end
-                        end
+                            4'b1011: begin
+                                resultado <= reg1 - reg2;
+                                $display("IN_EQUAL (Subtração): resultado=%d", resultado);
+                            end
+                            4'b1100: begin
+                                resultado <= 0;
+                                contador_m <= 0;
+                                $display("IN_EQUAL (Multiplicação zerada): resultado=%d", resultado);
+                            end
+                            default: begin
+                                states <= ERROR;
+                                out_states <= ERRO;
+                            end
+                        endcase
+                        pos_disp <= 0;
+                        states <= SEND_DIS;
+                    end else begin
+                        states <= ERROR;
+                        out_states <= ERRO;
                     end
                 end
 
+                SEND_DIS: begin
+                    if (operacao == 4'b1100 && contador_m < reg2) begin
+                        resultado <= resultado + reg1;
+                        contador_m <= contador_m + 1;
+                        out_states <= OCUPADA;
+                        $display("SEND_DIS (Multiplicação em andamento): resultado=%d, contador_m=%d", resultado, contador_m);
+                    end 
+                    else if (operacao == 4'b1100 && contador_m == reg2) begin
+                        if (resultado > 32'd99999999) begin
+                            states <= ERROR;
+                            out_states <= ERRO;
+                        end else begin
+                            aux_resultado <= resultado;
+                            pos_disp <= 0;
+                            operacao <= 0; // limpa para não reentrar
+                            $display("SEND_DIS (Multiplicação concluída): aux_resultado=%d", aux_resultado);
+                        end
+                    end 
+                    // Soma/sub: copia resultado no primeiro ciclo
+                    else if (pos_disp == 0 && operacao != 4'b1100) begin
+                        if (resultado > 32'd99999999) begin
+                            states <= ERROR;
+                            out_states <= ERRO;
+                        end else begin
+                            aux_resultado <= resultado;
+                            $display("SEND_DIS (Soma/Subtracao): aux_resultado=%d", aux_resultado);
+                        end
+                    end 
+                    // Exibição do resultado
+                    else if (pos_disp < 8) begin
+                        dig <= aux_resultado % 10;
+                        aux_resultado <= aux_resultado / 10;
+                        pos <= 7 - pos_disp;
+                        pos_disp <= pos_disp + 1;
+                        out_states <= OCUPADA;
+                        $display("SEND_DIS (Exibição): aux_resultado=%d, dig=%d, pos=%d", aux_resultado, dig, pos);
+                    end 
+                    // Fim da exibição
+                    else begin
+                        resultado <= 0;
+                        operacao <= 0;
+                        contador_m <= 0;
+                        states <= IN_REG1;
+                        out_states <= PRONTA;
+                        $display("SEND_DIS (Fim): resultado=%d", resultado);
+                    end
+                end
+
+                ERROR: begin
+                    out_states <= ERRO;
+                    $display("ERROR: reg1=%d, reg2=%d, resultado=%d, operacao=%d", reg1, reg2, resultado, operacao);
+                end
             endcase
         end
     end
-
 endmodule
