@@ -44,6 +44,5 @@ module Display_Ctrl(
       end
     end
   end
-
-
 endmodule
+
