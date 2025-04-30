@@ -1,8 +1,8 @@
 module Display_Ctrl(
-  input logic clock,       // Clock do sistema
-  input logic reset,       // Reset geral
-  input logic [3:0] dig,   // Número a ser exibido (0 a 9)
-  input logic [3:0] pos,   // Qual display deve mostrar o número
+  input logic clock,       
+  input logic reset,       
+  input logic [3:0] dig,   
+  input logic [3:0] pos,   
   
   output logic[7:0] a,
   output logic[7:0] b,
@@ -14,10 +14,7 @@ module Display_Ctrl(
   output logic[7:0] dp
 );
 
-
-  //cria um vetor de 8 linhas (chamado data), onde cada posição (linha) tem 4 bits (para armazenar um numero de 0 à 9)
-  logic[7:0][3:0] data = '{default: 4'd15};
-
+  logic[7:0][3:0] data = '{default: 4'd0};
 
   display d0 (.data(data[0]),.a(a[0]), .b(b[0]), .c(c[0]), .d(d[0]), .e(e[0]), .f(f[0]), .g(g[0]), .dp(dp[0]));
 
@@ -35,18 +32,18 @@ module Display_Ctrl(
   
   display d7 (.data(data[7]),.a(a[7]), .b(b[7]), .c(c[7]), .d(d[7]), .e(e[7]), .f(f[7]), .g(g[7]), .dp(dp[7]));
 
-
   always @(posedge clock) begin
     if (reset) begin
       for (int i = 0; i < 8; i++) begin
         data[i] <= 4'b0;
-    end
-  end else begin
-    if (pos < 8 && dig < 10) begin
-      data[pos] <= dig;
+      end
+    end else begin
+      if (pos < 8 && dig < 10) begin
+        data[pos] <= dig;
+        $display("Display_Ctrl - Atualizando data[%0d] com dig=%0d", pos, dig);
+      end
     end
   end
-end
 
 
 endmodule

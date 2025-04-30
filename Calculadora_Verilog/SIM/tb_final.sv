@@ -79,7 +79,7 @@ module tb_final;
     #10 cmd = 4'b1100;  
     #10 cmd = 4'b0010;  
     #10 cmd = 4'b1110;  
-    #100;               
+    #500;               
     $stop;
   end
 
