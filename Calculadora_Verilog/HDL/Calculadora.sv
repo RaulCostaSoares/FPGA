@@ -8,7 +8,7 @@ module Calculadora(
     output logic [3:0] dig     
 );
 
-    typedef enum logic [1:0] {ERRO, PRONTA, OCUPADA} estados_sinal;
+    typedef enum logic [1:0] {ERRO, PRONTA, OCUPADA, IMPRIME} estados_sinal;
     typedef enum logic [2:0] {
         IN_REG1, IN_OP, IN_REG2, IN_EQUAL, SEND_DIS, ERROR
     } estados_calculadora;
