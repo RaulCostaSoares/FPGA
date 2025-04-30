@@ -1,19 +1,13 @@
-// ==============================
-// Módulo: calculadora_top
-// Função: Topo do sistema da calculadora
-// Conecta: Calculadora + Display_Ctrl + Saída para os 8 displays de 7 segmentos
-// ==============================
-
 module Calculadora_Top(
     input logic [3:0] cmd,
     input logic reset, clock,
-    output logic [7:0] d0, d1, d2, d3, d4, d5, d6, d7   // cada display de 7 segmentos
+    output logic [7:0] d0, d1, d2, d3, d4, d5, d6, d7 
 );
 
-    logic [3:0] dig, pos;  // dados e posição para o display
-    logic [1:0] status;     // estado da calculadora
-    logic [7:0] a, b, c, d, e, f, g, dp;  //sinais para os segmetos de cada display
-
+    logic [3:0] dig, pos;  
+    logic [1:0] status;    
+    logic [7:0] a, b, c, d, e, f, g, dp;  
+    
     Calculadora calculo (
         .clock(clock),
         .reset(reset),
