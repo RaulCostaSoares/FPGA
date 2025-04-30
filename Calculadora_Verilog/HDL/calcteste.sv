@@ -47,6 +47,8 @@ module Calculadora(
                         aux_reg1 <= cmd;
                         pos_disp <= 0;
                         internal_states <= IMPRIME_REG1;
+                    end else begin
+                        internal_states <= IN_REG1;
                     end
                 end
 
@@ -55,8 +57,11 @@ module Calculadora(
                     pos <= pos_disp;
                     aux_reg1 <= aux_reg1 / 10;
                     pos_disp <= pos_disp + 1;
-                    if (aux_reg1 == 0 || pos_disp == 8)
+                    if (aux_reg1 == 0 || pos_disp == 8) begin
                         internal_states <= IN_OP;
+                    end else begin
+                        internal_states <= IMPRIME_REG1;
+                    end
                 end
 
                 IN_OP: begin
@@ -83,6 +88,8 @@ module Calculadora(
                         pos_disp <= 0;
                         internal_states <= IMPRIME_REG2;
                         estados_de_saida <= OCUPADA;
+                    end else begin
+                        internal_states <= IN_REG2; 
                     end
                 end
 
@@ -91,8 +98,11 @@ module Calculadora(
                     pos <= pos_disp;
                     aux_reg2 <= aux_reg2 / 10;
                     pos_disp <= pos_disp + 1;
-                    if (aux_reg2 == 0 || pos_disp == 8)
+                    if (aux_reg2 == 0 || pos_disp == 8) begin
                         internal_states <= IN_EQUAL;
+                    end else begin
+                        internal_states <= IMPRIME_REG2;
+                    end
                 end
 
                 IN_EQUAL: begin
